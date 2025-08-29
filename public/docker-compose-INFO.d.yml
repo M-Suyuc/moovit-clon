@@ -1,0 +1,28 @@
+version: "3.8"
+# Para levantar la imagen de decker correr el comando: docker compose up -d
+# -d (--detach ) significa que se ejecutará en segundo plano
+
+services:
+  # Nombre del servicio de la aplicación
+  postgres-db:
+    # que version de la imagen de Docker se usará
+    image: postgres:15.3
+    #   Nombre del contenedor dns para referenciarlo
+    container_name: todos-db
+    #  Indica que el contenedor se reiniciará automáticamente
+    restart: always
+    # Variables de entorno para la configuración de la base de datos
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      # Permite conectar una carpeta de mi pc con una carpeta del contenedor(servidor-imagen)
+    # Montaje de volúmenes para persistencia de datos
+    # espacio fisico de mi pc donde se guardarán los datos de la base de datos
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+      # numero de conexiones permitidas
+      # la base de datos de posgresql por defecto es 5432(de mi equipo) y el otro es el puerto del host(del contenedor)
+      # forma de conectarse de mi pc al contenedor
+    ports:
+      - 5432:5432

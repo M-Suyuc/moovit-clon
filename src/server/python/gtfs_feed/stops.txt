@@ -1,0 +1,129 @@
+stop_id,stop_name,stop_desc,stop_lat,stop_lon,location_type,parent_station,stop_timezone,wheelchair_boarding
+1,San Sebastián - Líneas 1 y 2,"3ª calle y 6ª avenida, zona 1. ",14.6458223,-90.5130895,0,,America/Guatemala,1
+2,Gómez Carrillo,"5ª avenida y 14 calle, zona 1.",14.6345353535,-90.5157880548,0,,America/Guatemala,1
+3,San Agustín,"5ª avenida y 11 calle, zona 1.",14.6384672,-90.5152966,0,,America/Guatemala,1
+4,Parque Centenario,"5ª avenida y 8ª calle, zona 1.",14.6420646,-90.5148043,0,,America/Guatemala,1
+5,Mercado Central,"8ª avenida y 6ª calle, zona 1.",14.6423372473,-90.5115007816,0,,America/Guatemala,1
+6,Correos,"8ª avenida y 12 calle, zona 1.",14.6371623831,-90.5122481224,0,,America/Guatemala,1
+7,Beatas de Belén,"8ª avenida y 15 calle, zona 1.",14.6339182,-90.5126794,0,,America/Guatemala,1
+8,Paseo de las Letras,"8ª avenida y 19 calle, zona 1.",14.6299042,-90.5133353,0,,America/Guatemala,1
+9,Centro Cívico,"21 calle y 6ª avenida “A”, zona 1.",14.6277269,-90.5148188,0,,America/Guatemala,1
+10,Sur 2,"5ª avenida y 18 calle, zona 1.",14.6313137,-90.5162884,0,,America/Guatemala,1
+11,Simeón Cañas,"Avenida Simeón Cañas y 7ª calle, zona 2.",14.6539497,-90.5118799,0,,America/Guatemala,1
+12,Hipódromo del Norte,"Avenida Simeón Cañas y 11 calle, zona 2.",14.6595417,-90.5097801,0,,America/Guatemala,1
+13,San José de la Montaña,"Avenida Simeón Cañas y 6ª calle, zona 2.",14.6538416,-90.5119433,0,,America/Guatemala,1
+14,Jocotenango,"6ª avenida entre 3ª y 4ª calle, zona 2.",14.6510099,-90.5131177,0,,America/Guatemala,1
+15,San Sebastián - Líneas 1 y 2,"3ª calle y 6ª avenida, zona 1.",14.6458223,-90.5130896,0,,America/Guatemala,1
+16,Plaza Barrios/FEGUA - Líneas 6 y 18,"18 calle y 10ª avenida, zona 1.",14.6305278,-90.5116332,0,,America/Guatemala,1
+17,Francos Monroy  - Líneas 6 y 18,"11 avenida y 15 calle, zona 1.",14.6326442,-90.5093697,0,,America/Guatemala,1
+18,Colón - Líneas 6 y 18,"11 avenida y 8ª calle, zona 1.",14.6399859,-90.5083715,0,,America/Guatemala,1
+19,Cerro del Carmen - Líneas 6 y 18,1a calle y 13 avenida entre zona 1 y 2. Línea 6 en dirección a FEGUA-Plaza Barrios y Proyectos.,14.6481246,-90.504911,0,,America/Guatemala,1
+20,Parroquia ,"15 avenida y 3ª calle, zona 6.",14.6499868,-90.4997926,0,,America/Guatemala,1
+21,IGSS Zona 6,"16 avenida y 6ª calle, zona 6.",14.6515687,-90.4974681,0,,America/Guatemala,1
+22,Centro Zona 6,"16 avenida y 10ª calle, zona 6.",14.6549439,-90.4960752,0,,America/Guatemala,1
+23,Academia,"16 avenida y 15 calle, zona 6.",14.6590336,-90.4940548,0,,America/Guatemala,1
+24,Cipresales,"Avenida La Pedrera y 18 calle, zona 6. En dirección a Proyectos y Plaza Barrios/FEGUA.",14.6653195407,-90.4937942196,0,,America/Guatemala,1
+25,Proyectos 4-4,"Avenida La Pedrera y 20 calle, zona 6. En dirección a Proyectos y Plaza Barrios/FEGUA.",14.6675588919,-90.4919391081,0,,America/Guatemala,1
+26,Proyectos,"Avenida La Pedrera y 25 calle, zona 6.",14.6733289,-90.4874619,0,,America/Guatemala,1
+27,Quintanal,"15 avenida y 13 calle, zona 6.",14.6585774,-90.4959969,0,,America/Guatemala,1
+28,Corpus Christi,"15 avenida y 10ª calle, zona 6.",14.6568318,-90.4968484,0,,America/Guatemala,1
+29,José Martí,"14 avenida y 7ª calle, zona 6.",14.6529542,-90.4999976,0,,America/Guatemala,1
+30,Santa Teresa,"10ª avenida y 4ª calle, zona 1.",14.6440513,-90.5091647,0,,America/Guatemala,1
+31,Capuchinas - Líneas 6 y 18,10a avenida y 10a calle zona 1.,14.6385543,-90.5098921,0,,America/Guatemala,1
+32,USAC Periférico,"Anillo Periférico y 11 avenida, zona 12.",14.5931191,-90.5505149,0,,America/Guatemala,1
+33,Granai - Dir. La Merced,"Anillo Periférico 12 avenida, zona 11. En dirección a La Merced.",14.5996352253572,-90.5591353730499,0,,America/Guatemala,1
+34,Granai - Dir. USAC Periférico,"Anillo Periférico 9ª avenida A, zona 11. En dirección a USAC Periférico.",14.5995722497854,-90.5595304824616,0,,America/Guatemala,1
+35,Rodolfo Robles - Dir. La Merced,"Anillo Periférico 20 calle, zona 11. En dirección a La Merced.",14.607071617372,-90.5582109644315,0,,America/Guatemala,1
+36,Rodolfo Robles - Dir. USAC Periférico,"Anillo Periférico Diagonal 21 y calle Mariscal, zona 11. En dirección a USAC Periférico.",14.6076732947011,-90.5580940464099,0,,America/Guatemala,1
+37,CEJUSA - Dir. La Merced,"Anillo Periférico y 18 calle, zona 11. En dirección a La Merced.",14.6094369643937,-90.5565247428929,0,,America/Guatemala,1
+38,CEJUSA - Dir. USAC Periférico,"Anillo Periférico y 17 calle, zona 11. En dirección a USAC Periférico.",14.6100950533035,-90.5564312782236,0,,America/Guatemala,1
+39,San Jorge - Dir. La Merced,"Anillo Periférico y 21 avenida, zona 11. En dirección a La Merced.",14.6183580561786,-90.5556855216437,0,,America/Guatemala,1
+40,San Jorge - Dir. USAC Periférico,"Anillo Periférico y 22 avenida, zona 11. En dirección a USAC Periférico.",14.6192973939394,-90.5565562297539,0,,America/Guatemala,1
+41,Roosevelt - Dir. La Merced,"Anillo Periférico y Calzada Roosevelt, zona 11. En dirección a La Merced.",14.6262217,-90.5582728,0,,America/Guatemala,1
+42,Roosevelt - Dir. USAC Periférico,"Anillo Periférico y Calzada Roosevelt, zona 11. En dirección a USAC Periférico.",14.6260413,-90.5590093,0,,America/Guatemala,1
+43,San Juan - Dir. La Merced,"Anillo Periférico entre 4ª y 6ª calles, zona 7. En dirección a La Merced.",14.6302399834828,-90.5547440705257,0,,America/Guatemala,1
+44,San Juan - Dir. USAC Periférico,"Anillo Periférico 6ª calle, zona 7. En dirección a USAC Periférico.",14.630420404221,-90.5549736206426,0,,America/Guatemala,1
+45,Ciudad de Plata II - Dir. La Merced,"Anillo Periférico y 14 calle, zona 7. En dirección a La Merced.",14.6383064353791,-90.5505560315283,0,,America/Guatemala,1
+46,Ciudad de Plata II - Dir. USAC Periférico,"Anillo Periférico y 13 calle ""B"", zona 7. En dirección a USAC Periférico.",14.6384895,-90.5507534,0,,America/Guatemala,1
+47,Villa Linda - Dir. La Merced,"Anillo Periférico y 16 calle, zona 7. En dirección a La Merced.",14.6413304,-90.5462549,0,,America/Guatemala,1
+48,Villa Linda - Dir. USAC Periférico,"Anillo Periférico y 16 calle, zona 7. En dirección a USAC Periférico.",14.6422299395508,-90.545502811598,0,,America/Guatemala,1
+49,4 de febrero - Dir. La Merced,"Anillo Periférico 6ª calle, zona 7. En dirección a La Merced.",14.6449184,-90.5396663,0,,America/Guatemala,1
+50,4 de febrero - Dir. USAC Periférico,"Anillo Periférico y 22 calle, zona 7. En dirección a USAC Periférico.",14.6445073011811,-90.5408252639238,0,,America/Guatemala,1
+51,Bethania - Dir. USAC Periférico,"Anillo Periférico y 13 avenida, zona 7. En dirección a USAC Periférico.",14.645890505753,-90.5368125077084,0,,America/Guatemala,1
+52,Incienso - Dir. La Merced,"Anillo Periférico y Puente El Incienso, zona 7. En dirección a La Merced.",14.6487105736621,-90.5309661734456,0,,America/Guatemala,1
+53,Incienso - Dir. USAC Periférico,"Anillo Periférico y Puente El Incienso, zona 7. En dirección a USAC Periférico.",14.6487935888532,-90.5313982057181,0,,America/Guatemala,1
+54,San Juan de Dios,"9ª calle y 2ª avenida, zona 1.",14.6412303,-90.5188899,0,,America/Guatemala,1
+55,Pasaje Aycinena,"9ª calle y 7ª avenida, zona 1.",14.640319,-90.5130679,0,,America/Guatemala,1
+56,La Merced,"11 avenida y 4ª calle, zona 1.",14.6434701,-90.5079253,0,,America/Guatemala,1
+57,Cruz Roja,"4ª calle y 8ª avenida, zona 1.",14.6442404741971,-90.5109447792921,0,,America/Guatemala,1
+58,Archivo General,"4ª avenida y 7ª calle, zona 1.",14.6424335106193,-90.515695217523,0,,America/Guatemala,1
+59,Santuario de Guadalupe,"8ª calle y 1ª avenida, zona 1.",14.6420881,-90.5193033,0,,America/Guatemala,1
+60,Bethania - Dir. Colón,"Anillo Periférico y 25 calle, zona 7. En dirección a Colón.",14.6455512,-90.5365946,0,,America/Guatemala,1
+61,Plaza Municipal,"6ª avenida y 21 calle, zona 1.",14.6275976,-90.5158099,0,,America/Guatemala,1
+62,Plaza Barrios,"9ª avenida y 18 calle, zona 1.",14.6301613,-90.5122639,0,,America/Guatemala,1
+63,Plaza El Amate,"18 calle y 4ª avenida, zona 1.",14.6313317,-90.5168364,0,,America/Guatemala,1
+64,Don Bosco,"1ª avenida y 26 calle, zona 1. En dirección a Centra Sur y Plaza Barrios.",14.6250611,-90.522144,0,,America/Guatemala,1
+65,Bolívar - Dir. Plaza Barrios,"Avenida Bolívar y 32 calle, zona 8. En dirección a Plaza Barrios.",14.6190615,-90.5278149,0,,America/Guatemala,1
+66,Bolívar - Dir. Centra Sur,"Avenida Bolívar y 31 calle, zona 3. En dirección a Centra Sur.",14.6198422,-90.5272527,0,,America/Guatemala,1
+67,Santa Cecilia,"Avenida Bolívar y 40 calle, zona 8. En dirección a Centra Sur y Plaza Barrios.",14.6145729,-90.5331221,0,,America/Guatemala,1
+68,Trébol,"Calzada Aguilar Batres y avenida Bolívar, zona 12.",14.612670046,-90.5357210388,0,,America/Guatemala,1
+69,Mariscal - Dir. Centra Sur,"Calzada Aguilar Batres y 13 calle, zona 12. En dirección a Centra Sur.",14.6057486,-90.5440659,0,,America/Guatemala,1
+70,Mariscal - Dir. Plaza Barrios,"Calzada Aguilar Batres y 15 calle, zona 12. En dirección a Plaza Barrios.",14.6047193435,-90.545098575,0,,America/Guatemala,1
+71,Reformita - Dir. Centra Sur,"Calzada Aguilar Batres y 20 calle, zona 12. En dirección a Centra Sur.",14.6023915,-90.5480005,0,,America/Guatemala,1
+72,Reformita - Dir. Plaza Barrios,"Calzada Aguilar Batres y 21 calle, zona 12. En dirección a Plaza Barrios.",14.6010261598,-90.5496040842,0,,America/Guatemala,1
+73,El Carmen,"Calzada Aguilar Batres y 29 calle, zona 12. En dirección a Centra Sur y Plaza Barrios.",14.5963309,-90.555506,0,,America/Guatemala,1
+74,Las Charcas - Dir. Centra sur,"Calzada Aguilar Batres y 32 calle, zona 12. En dirección a Centra Sur.",14.5934766,-90.5584882,0,,America/Guatemala,1
+75,Las Charcas - Dir. Plaza Barrios,"Calzada Aguilar Batres y 34 calle, zona 12. En dirección a Plaza Barrios.",14.5924201,-90.5590068,0,,America/Guatemala,1
+76,Javier,"Calzada Aguilar Batres y 38 calle, zona 12 Villa Nueva. En dirección a Centra Sur y Plaza Barrios.",14.5869636,-90.5628031,0,,America/Guatemala,1
+77,Monte María,"Calzada Aguilar Batres y 46 calle, zona 12 Villa Nueva. En dirección a Centra Sur y Plaza Barrios.",14.5806311,-90.5679521,0,,America/Guatemala,1
+78,Centra Sur,"21 avenida final, zona 12 Villa Nueva.",14.5644738,-90.5637593,0,,America/Guatemala,1
+79,4 Grados Sur,"6ª avenida y 24 calle, zona 4.",14.6243445,-90.5163994,0,,America/Guatemala,1
+80,Exposición ,"6ª avenida y ruta 6, zona 4.",14.6192992,-90.5171929,0,,America/Guatemala,1
+81,Terminal,"6ª avenida y 2ª calle, zona 9.",14.6135586,-90.518269,0,,America/Guatemala,1
+82,Industria,"6ª avenida y 6ª calle, zona 9.",14.6093975,-90.5190426,0,,America/Guatemala,1
+83,Tívoli,"6ª avenida y 10ª calle, zona 9.",14.6044945,-90.520057,0,,America/Guatemala,1
+84,Montúfar,"6ª avenida y 13 calle, zona 9.",14.6005326,-90.5207722,0,,America/Guatemala,1
+85,Acueducto,"Avenida Hincapié y 4ª calle, zona 13.",14.5936001,-90.5217228,0,,America/Guatemala,1
+86,Fuerza Aérea,"Avenida Hincapié y 11 calle, zona 13.",14.5875859,-90.5233684,0,,America/Guatemala,1
+87,Hangares,"15 avenida y 18 calle, zona 13.",14.5800731,-90.5243845,0,,America/Guatemala,1
+88,Plaza Argentina,"15 avenida y 11 calle, zona 13.",14.585852,-90.5225374,0,,America/Guatemala,1
+89,Los Arcos,"15 avenida y 4ª calle, zona 13.",14.5920665,-90.520798,0,,America/Guatemala,1
+90,Plaza España,"7ª avenida y 13 calle, zona 9.",14.5997194,-90.5191374,0,,America/Guatemala,1
+91,IGSS Zona 9,"7ª avenida y 10ª calle, zona 9.",14.6040911,-90.5183364,0,,America/Guatemala,1
+92,Seis 26,"7ª avenida y 5ª calle, zona 9.",14.6092,-90.5173721,0,,America/Guatemala,1
+93,Torre del Reformador,"7ª avenida y 1ª calle, zona 9.",14.6141275,-90.5164141,0,,America/Guatemala,1
+94,Plaza de la República,"7ª avenida y ruta 4, zona 4.",14.6196137,-90.5154943,0,,America/Guatemala,1
+95,Cantón Exposición,"7ª avenida Ruta 2 y Vía 3, zona 4.",14.62237,-90.5151466,0,,America/Guatemala,1
+96,Banco de Guatemala,"7ª avenida y 22 calle, zona 1.",14.6261688,-90.514641,0,,America/Guatemala,1
+97,Tipografía,"18 calle y 7ª avenida, zona 1.",14.6308822,-90.5143715,0,,America/Guatemala,1
+98,El Calvario,"6ª avenida y 21 calle, zona 1.",14.6301984,-90.5155676,0,,America/Guatemala,1
+99,Plaza Berlín,"Plaza Berlín y Avenida Las Américas, zona 13.",14.569946,-90.526851,0,,America/Guatemala,1
+100,Juan Pablo II,"Avenida Las Américas y 21 calle, zona 13.",14.574241,-90.524253,0,,America/Guatemala,1
+101,Plaza Argentina,"15 avenida y 11 calle, zona 13.",14.585852,-90.522537,0,,America/Guatemala,1
+102,Atlántida,"11 avenida (Bulevar Álvaro Arzú), zona 18. En dirección a Plaza Barrios/FEGUA.",14.6510493,-90.4779899,0,,America/Guatemala,1
+103,Portales,KM. 4.5 Carretera al Atlántico 3-20<br>Ciudad de Guatemala.,14.6487306,-90.4819879,0,,America/Guatemala,1
+104,Victorias,"Avenida Las Victorias y 3ª calle, zona 6. En dirección a Atlántida y Plaza Barrios/FEGUA.",14.6484275,-90.4934376,0,,America/Guatemala,1
+105,San Martín - Dir. Atlántida,"1ª calle y 18 avenida, zona 1. En dirección a Atlántida.",14.6452716,-90.4967263,0,,America/Guatemala,1
+106,Cerro del Carmen - Líneas 6 y 18,1a calle y 13 avenida entre zona 1 y 2. Línea 18 en dirección hacia Atlántida.,14.6481245,-90.5049112,0,,America/Guatemala,1
+107,Colón - Líneas 6 y 18,"11 avenida y 8ª calle, zona 1.",14.639986,-90.5083689,0,,America/Guatemala,1
+108,Francos Monroy - Líneas 6 y 18,"11 avenida y 15 calle, zona 1.",14.6326444,-90.5093697,0,,America/Guatemala,1
+109,Plaza Barrios/FEGUA - Líneas 6 y 18,"18 calle y 9ª avenida, zona 1.",14.6305281,-90.5116328,0,,America/Guatemala,1
+110,Capuchinas - Líneas 6 y 18,"10ª avenida y 10ª calle, zona 1.",14.6385546,-90.5098923,0,,America/Guatemala,1
+111,San Martín - Dir. Plaza Barrios/FEGUA,"20 avenida y 1ª calle, zona 1. En dirección a Plaza Barrios/FEGUA.",14.6449348,-90.4964517,0,,America/Guatemala,1
+112,Atlántida - San Rafael - Paraíso,"11 avenida (Bulevar Álvaro Arzú), zona 18. En dirección a Paraíso.",14.6510201,-90.4779892,0,,America/Guatemala,1
+113,Paraíso,"12 calle y 25 avenida, zona 18.",14.6589799,-90.4466713,0,,America/Guatemala,1
+114,San Rafael,"12 calle y 4ª avenida Colonia San Rafael, zona 18.",14.654981976,-90.4520611903,0,,America/Guatemala,1
+115,Estación Palacio de los Deportes Norte,,14.622884,-90.512888,0,,America/Guatemala,1
+116,Estación La Palmita ,,14.621709,-90.505708,0,,America/Guatemala,1
+117,Estacion Parque Navidad,,14.624694,-90.501337,0,,America/Guatemala,1
+118,Estación Arrivillaga,,14.626814,-90.495695,0,,America/Guatemala,1
+119,Estacion Cipreses Norte,,14.636173,-90.493209,0,,America/Guatemala,1
+120,Estacion Mercado La Palmita ,,14.622502,-90.506793,0,,America/Guatemala,1
+121,Estación Palacio de los Deportes Sur,,14.622983,-90.512408,0,,America/Guatemala,1
+122,Estacion Parque Colon,,14.639506,-90.507199,0,,America/Guatemala,1
+123,Estación Vivibien,,14.624372,-90.499584,0,,America/Guatemala,1
+124,Estación Matamoros ,,14.6404609,-90.5037806,0,,America/Guatemala,1
+125,Estación Jardines de la Asunción Sur,,14.632392,-90.494629,0,,America/Guatemala,1
+126,Estación Jardines de la Asunción Norte,,14.633008,-90.494228,0,,America/Guatemala,1
+127,Estación Puente de la Penitenciaría,,14.624905,-90.51506,0,,America/Guatemala,1
+128,Estacion Cipreses Sur,,14.635417,-90.493313,0,,America/Guatemala,1

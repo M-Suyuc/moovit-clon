@@ -1,0 +1,27 @@
+# Base de datos PostGIS para GTFS
+services:
+  db_postgis:
+    image: postgis/postgis:15-3.4
+    container_name: gtfs_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      TZ: America/Guatemala
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgis_data:/var/lib/postgresql/data
+
+  # use pgadmin to manage the database
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "suyucmarlon02@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - 80:80
+    depends_on:
+      - db_postgis

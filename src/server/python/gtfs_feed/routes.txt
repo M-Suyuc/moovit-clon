@@ -1,0 +1,4 @@
+route_id,agency_id,route_short_name,route_long_name,route_type,route_color,route_text_color
+1,TRANSMETRO,Línea 1,Línea 1 - Transmetro,3,DB4436,FFFFFF
+2,TRANSMETRO,Línea 7,Línea 7 - Transmetro,3,DB4436,FFFFFF
+3,TRANSMETRO,RUTA 5,RUTA 5 - Transmetro,3,DB4436,FFFFFF
