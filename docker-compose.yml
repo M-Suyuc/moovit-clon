@@ -5,9 +5,9 @@ services:
     container_name: gtfs_db
     restart: always
     environment:
-      POSTGRES_USER: ${PGUSER}
-      POSTGRES_DB: ${PGDATABASE}
-      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_USER: ${POSTGISUSER}
+      POSTGRES_DB: ${POSTGISDBNAME}
+      POSTGRES_PASSWORD: ${POSTGISPASSWORD}
       TZ: America/Guatemala
     ports:
       - 5432:5432
@@ -19,9 +19,19 @@ services:
     image: dpage/pgadmin4
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: "suyucmarlon02@gmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "admin"
+      PGADMIN_DEFAULT_EMAIL: ${PGEMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGPASSWORD}
     ports:
       - 80:80
     depends_on:
       - db_postgis
+
+  # tile server for rendering maps
+  tileserver:
+    image: maptiler/tileserver-gl
+    container_name: tile_server
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ./tileserver-guatemala:/data
