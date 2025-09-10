@@ -8,12 +8,11 @@ declare global {
 
   namespace NodeJS {
     interface ProcessEnv {
-      PGHOST: string;
-      PGDATABASE: string;
-      PGUSER: string;
-      PGPASSWORD: string;
-      PGPORT?: number;
-      // DB_CA_CERTIFICATE?: string;
+      POSTGISHOST: string;
+      POSTGISDBNAME: string;
+      POSTGISUSER: string;
+      POSTGISPASSWORD: string;
+      POSTGISPORT?: number;
     }
 
     // Extend the global interface to include our database instance
@@ -37,17 +36,15 @@ interface Database {
 const poolConfig = {
   max: 20, // set pool size to 20 connections
   idleTimeoutMillis: 10000, // close idle clients after 10 seconds
-  connectionTimeoutMillis: 2000, // return an error after 2 seconds if connection could not be established
-
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  user: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-  // ssl: {
-  //   rejectUnauthorized: true,
-  //   ca: process.env.DB_CA_CERTIFICATE,
-  // },
+  connectionTimeoutMillis: 10000, // return an error after 10 seconds if connection could not be established
+  host:
+    process.env.POSTGISHOST === "localhost"
+      ? "127.0.0.1"
+      : process.env.POSTGISHOST,
+  database: process.env.POSTGISDBNAME,
+  user: process.env.POSTGISUSER,
+  password: process.env.POSTGISPASSWORD,
+  port: process.env.POSTGISPORT ?? 5432,
 };
 
 // Create or use the existing pool
