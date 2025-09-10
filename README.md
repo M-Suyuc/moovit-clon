@@ -78,14 +78,3 @@ select * from stops
 pnpm install
 pnpm run dev
 ```
-
-<!-- ## Levantar tileserver
-```sh
-docker pull maptiler/tileserver-gl
-```
-```sh
-docker run --rm -it -v ~/tileserver-guatemala:/data -p 8080:8080 maptiler/tileserver-gl
-``` -->
-
-<!-- part final of cv -->
-<!-- Algoritmos JavaScript y Estructuras de Datos [FreeCodeCamp] -->
