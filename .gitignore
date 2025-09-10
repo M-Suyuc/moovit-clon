@@ -5,6 +5,7 @@
 /gtfs_feed
 /postgis_data
 /node_modules
+/tileserver-guatemala
 /.pnp
 .pnp.*
 .yarn/*
@@ -12,8 +13,6 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-
-/osm-2020-02-10-v3.11_guatemala_guatemala-city.mbtiles
 
 # testing
 /coverage
