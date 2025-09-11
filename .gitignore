@@ -2,6 +2,7 @@
 
 # dependencies
 src/server/python/venv/
+src/server/data-over-pass.json
 /openmaptiles
 /gtfs_feed
 /postgis_data
