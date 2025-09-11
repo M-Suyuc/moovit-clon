@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+/src/server/python/venv
 /openmaptiles
 /gtfs_feed
 /postgis_data
@@ -13,6 +14,8 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+*.zip
+*.pbf
 
 # testing
 /coverage
