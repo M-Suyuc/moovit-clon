@@ -1,2 +1,0 @@
-feed_publisher_name,feed_publisher_url,feed_lang,feed_contact_email,feed_start_date,feed_end_date,feed_version
-MLS-Transport,https://mls-transport.com,es,suyucmarlon02@gmail.com,20250825,20260825,1.0.20250825
