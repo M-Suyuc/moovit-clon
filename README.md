@@ -1,31 +1,12 @@
 # Pasos para correr la app **mls-transport**
 
 > [!WARNING]
-> Still in Development
+> Still in `Se VE diferente solo para ejemplo` Development
 
-## hacer la convesion de archivo kml a gtfs usando python no nativamente si no levatando un entorno virtual
+## hacer la convesion de archivo kml a archivos gtfs usando javascript
 
-- Crear entorno virtual
-
-```sh
-python -m venv venv
-```
-
-- Activar entorno virtual
-
-```sh
-source venv/bin/activate # Linux/Mac
-venv\Scripts\activate # Windows
-```
-
-- Instalar dependencias
-
-```sh
-pip install -r requirements.txt
-```
-
-- Desactivar cuando termines
-  deactivate
+correr el archivo /home/marlon/Dev/mls-transport/src/server-js/main.ts
+pnpm run dev
 
 ## como levatar la db usando postgis + porgres y ademas los servicios de TileServer GL
 
@@ -33,10 +14,12 @@ pip install -r requirements.txt
 
 ```sh
 docker compose up -d
-esto leera el docker-compose.yml de la app y levantara las imagenes
+// esto leera el docker-compose.yml de la app y levantara las imagenes
 ```
 
 ## login con pgadmin
+
+abre [http://localhost:8080/](http://localhost:8080/) y pon tus credenciales que creaste en el tus variables de entorno de l archivo .env.
 
 create server ussing the credenciales usandas en el pgconfig del docker-compose.yml
 en el port nose porqeu ami cada vez qeu booro he inico otra vez me sale un nuevo perto y no localhost por defecto entonces ## haz clic aquí: [ver comando](#comando-docker)
@@ -58,13 +41,23 @@ docker ps
 docker inspect <postgis_container_id>
 ```
 
+## install extensions for postgis
+
+crea una Qrery tools de pdadmin e instala las extensiones
+
+```sh
+CREATE EXTENSION postgis_raster;
+CREATE EXTENSION postgis_sfcgal;
+CREATE EXTENSION address_standardizer;
+```
+
 ## como importar la data gtfs a la db de posgis usando gtfs-to-sql
 
 ```sh
-npx gtfs-to-sql --require-dependencies ./gtfs_feed/*.txt | docker exec -i gtfs_db psql -U postgis -d postgis_db
+npx gtfs-to-sql --require-dependencies ./src/server-js/gtfs_feed/*.txt | docker exec -i gtfs_db psql -U postgis -d postgis_db
 ```
 
-## entrar a ve en pgadmin y logearte con las credencia les creadas en el fil docker-compose.yml en el apartado de **pgadmin**
+## verificar en pgadmin que la importacion due exitosa
 
 - hacer consultar para ver si todod fue bien example:
 
@@ -72,6 +65,10 @@ npx gtfs-to-sql --require-dependencies ./gtfs_feed/*.txt | docker exec -i gtfs_d
 select * from stops
 
 ```
+
+## Abrir tileserver
+
+[http://localhost:8080/](http://localhost:8080/)
 
 ## corre la app de nextjs
 
