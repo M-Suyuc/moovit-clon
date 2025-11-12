@@ -1,0 +1,28 @@
+{
+  "name": "kml-to-gtfs-converter",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Convertidor de KML a GTFS usando Node.js",
+  "main": "main.js",
+  "scripts": {
+    "dev": "tsx ./main.ts"
+  },
+  "dependencies": {
+    "@types/xmldom": "^0.1.34",
+    "jszip": "^3.10.1",
+    "uuid": "^13.0.0",
+    "xmldom": "^0.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "tsx": "^4.20.6"
+  },
+  "keywords": [
+    "kml",
+    "gtfs",
+    "transporte",
+    "guatemala"
+  ],
+  "author": "MLS-Transport",
+  "license": "MIT"
+}
