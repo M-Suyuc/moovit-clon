@@ -9,7 +9,9 @@ export async function getStopsByRouteId(routeId: string) {
      SELECT 
       r.route_short_name,
       s.stop_id,
-      s.stop_name
+      s.stop_name,
+      ST_Y(s.stop_loc::geometry) as latitude,
+      ST_X(s.stop_loc::geometry) as longitude
     FROM routes r
     JOIN trips t ON r.route_id = t.route_id
     JOIN stop_times st ON t.trip_id = st.trip_id
