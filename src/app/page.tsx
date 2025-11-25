@@ -65,8 +65,8 @@ export default async function Home() {
             <li>
               {agencies.map((agency) => (
                 <Link
-                  href={`/rutas/${agency.agency_id.toLocaleLowerCase()}`}
                   key={agency.agency_id}
+                  href={`/routes/${agency.agency_id}`}
                   className="bg-white py-2 px-4 block "
                 >
                   <h3>{agency.agency_name}</h3>
