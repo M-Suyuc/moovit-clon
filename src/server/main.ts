@@ -133,7 +133,43 @@ class KMLProcessor {
           }
         }
 
-        // Buscar Polygon si no hay LineString
+        // Buscar MultiGeometry primero
+        const multiGeometry =
+          placemark?.getElementsByTagName("MultiGeometry")[0];
+        if (multiGeometry && coordinates.length === 0) {
+          const polygons = multiGeometry.getElementsByTagName("Polygon");
+          // Combinar coordenadas de todos los polígonos
+          for (let k = 0; k < polygons.length; k++) {
+            const polygon = polygons[k];
+            if (polygon) {
+              const outerBoundary =
+                polygon.getElementsByTagName("outerBoundaryIs")[0];
+              if (outerBoundary) {
+                const linearRing =
+                  outerBoundary.getElementsByTagName("LinearRing")[0];
+                if (linearRing) {
+                  const coordsElement =
+                    linearRing.getElementsByTagName("coordinates")[0];
+                  if (coordsElement) {
+                    const coordText = coordsElement.textContent?.trim();
+                    if (coordText) {
+                      const coordPairs = coordText
+                        .split(/\s+/)
+                        .filter((coord) => coord.includes(","));
+                      const polygonCoords = coordPairs.map((coord) => {
+                        const [lon = 0, lat = 0] = coord.split(",").map(Number);
+                        return { lat, lon };
+                      });
+                      coordinates.push(...polygonCoords);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        // Buscar Polygon si no hay LineString ni MultiGeometry
         const polygon = placemark?.getElementsByTagName("Polygon")[0];
         if (polygon && coordinates.length === 0) {
           const outerBoundary =
@@ -340,7 +376,6 @@ function createTripsAndStopTimes(stops: Stops[], routes: Routes[]) {
         });
       });
       console.log("🚀 ~ createTripsAndStopTimes ~ routeStops:", routeStops);
-
       tripCounter++;
     }
   });
