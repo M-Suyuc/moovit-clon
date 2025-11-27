@@ -66,7 +66,7 @@ export default async function Home() {
               {agencies.map((agency) => (
                 <Link
                   key={agency.agency_id}
-                  href={`/routes/${agency.agency_id}`}
+                  href={`/lines/${agency.agency_id}`}
                   className="bg-white py-2 px-4 block "
                 >
                   <h3>{agency.agency_name}</h3>
