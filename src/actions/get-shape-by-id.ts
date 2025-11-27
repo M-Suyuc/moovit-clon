@@ -37,7 +37,6 @@ export async function getShapeById({ routeId }: { routeId: string }) {
       );
     }
 
-    console.log(`Shapes encontrados para ${routeId}:`, shapes.rows.length);
     return shapes.rows;
   } catch (error) {
     console.error("Error fetching route shapes:", error);
