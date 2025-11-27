@@ -18,20 +18,14 @@ const Sidebar = async ({ data }: SidebarProps) => {
 
   return (
     <div
-      className="w-[500px] h-fit bg-white"
+      className="w-[500px] h-fit max-h-[550px] overflow-y-auto bg-white"
       role="dialog"
       aria-label="Sidebar"
     >
       <div className="relative flex flex-col h-full max-h-full ">
         {/* Header */}
-        <header className=" p-4 flex justify-between items-center gap-x-2">
-          <a
-            className="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80"
-            href="#"
-            aria-label="Brand"
-          >
-            Rutas
-          </a>
+        <header className=" p-4 flex justify-between items-center gap-x-2 bg-slate-900 text-white">
+          <h3 className="font-medium">{data.length} - Líneas</h3>
 
           <div className="lg:hidden -me-2">
             <button
@@ -63,12 +57,12 @@ const Sidebar = async ({ data }: SidebarProps) => {
         {/* Body */}
         <nav className="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
           <div className="pb-0 w-full flex flex-col flex-wrap">
-            <ul className="space-y-1">
+            <ul className="space-y-2">
               {data.map((r) => (
-                <li key={r.route_short_name}>
+                <li key={r.route_short_name} className="group">
                   <Link
-                    href={`/stop/${r.route_id}`}
-                    className="flex items-center gap-x-3.5 py-2 border-b border-neutral-300  text-gray-800 hover:bg-gray-100/40 pl-4"
+                    href={`/line/${r.route_id}`}
+                    className="flex items-center gap-x-3.5 py-2 px-4 border-b border-neutral-300 text-gray-800 hover:bg-gray-100/40 after:content-['>'] after:ml-auto after:text-blue-600 after:font-medium after:inline-block after:transition-all after:duration-200 group-hover:after:translate-x-1.5"
                   >
                     <svg
                       className="size-4"

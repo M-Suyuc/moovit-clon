@@ -18,18 +18,14 @@ const SidebarStops = async ({ data }: SidebarProps) => {
 
   return (
     <div
-      className="w-[500px] h-[500px] overflow-y-auto"
-      // role="dialog"
+      className="w-[500px] h-fit max-h-[550px] overflow-y-auto bg-white"
+      role="dialog"
       aria-label="Sidebar"
     >
       <div className="relative flex flex-col h-full max-h-full ">
         {/* Header */}
-        <header className=" p-4 flex justify-between items-center gap-x-2">
-          <a
-            className="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80"
-            href="#"
-            aria-label="Brand"
-          ></a>
+        <header className=" p-4 flex justify-between items-center gap-x-2 bg-slate-900 text-white">
+          <h3 className="font-medium">{data.length} - paradas</h3>
 
           <div className="lg:hidden -me-2">
             <button
@@ -63,11 +59,10 @@ const SidebarStops = async ({ data }: SidebarProps) => {
           <div className="pb-0 w-full flex flex-col flex-wrap">
             <ul className="space-y-1">
               {data.map((r) => (
-                <li key={r.stop_id}>
+                <li key={r.stop_id} className="group">
                   <Link
-                    href={`/stop/${r.stop_id}`}
-                    // href={`#`}
-                    className="flex items-center gap-x-3.5 py-2 border-b border-neutral-300  text-gray-800 hover:bg-gray-100/40 pl-4"
+                    href={`/stop/${r.stop_name}?id=${r.stop_id}`}
+                    className="flex items-center gap-x-3.5 py-2 px-4 border-b border-neutral-300 text-gray-800 hover:bg-gray-100/40 after:content-['>'] after:ml-auto after:text-blue-600 after:font-medium after:inline-block after:transition-all after:duration-200 group-hover:after:translate-x-1.5"
                   >
                     <svg
                       className="size-4"
