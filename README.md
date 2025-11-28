@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="./images/lines.png" /> 
+    <img src="./public/images/lines.png" /> 
   <h3>
     <strong>mls-Transport</strong>
   </h3>
@@ -160,6 +160,6 @@ pnpm run dev
 ```
 
 <div align="center">
-    <img src="./images/lines.png" /> 
-    <img src="./images/line.png" /> 
+    <img src="./public/images/lines.png" /> 
+    <img src="./public/images/line.png" /> 
 </div>
