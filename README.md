@@ -1,4 +1,11 @@
-# Steps to run project **mls-transport**
+<div align="center">
+    <img src="./images/lines.png" /> 
+  <h3>
+    <strong>mls-Transport</strong>
+  </h3>
+</div>
+
+## Get started
 
 > [!IMPORTANT]
 > If you find this information useful, please leave a star in the repository.
@@ -151,3 +158,8 @@ pnpm run dev
 # 10. Generar tiles y crear .mbtiles
  make generate-tiles-pg
 ```
+
+<div align="center">
+    <img src="./images/lines.png" /> 
+    <img src="./images/line.png" /> 
+</div>
