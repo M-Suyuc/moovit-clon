@@ -19,6 +19,7 @@ interface Routes {
   route_desc: string;
   route_type: number;
   coordinates: Array<{ lat: number; lon: number }> | null;
+  stops: string[] | null;
 }
 
 interface FeedInfo {
@@ -50,4 +51,13 @@ interface StopTimes {
   drop_off_type: number;
 }
 
-export type { Stops, Routes, FeedInfo, Trips, StopTimes };
+interface Agency {
+  agency_id: string;
+  agency_name: string;
+  agency_url: string;
+  agency_timezone: string;
+  agency_lang: string;
+  agency_phone: string;
+}
+
+export type { Agency, Stops, Routes, FeedInfo, Trips, StopTimes };

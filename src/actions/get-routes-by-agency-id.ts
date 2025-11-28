@@ -2,7 +2,7 @@
 
 import db from "@/services/connect-db";
 
-export async function getRoutes({ agencyId }: { agencyId: string }) {
+export async function getRoutesByAgencyId({ agencyId }: { agencyId: string }) {
   try {
     const routes = await db.query(
       `

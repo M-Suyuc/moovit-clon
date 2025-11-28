@@ -55,70 +55,66 @@ class KMLProcessor {
     }
 
     const folders = this.doc.getElementsByTagName("Folder");
-    const placemarks = this.doc.getElementsByTagName("Placemark");
-
     const stops: Stops[] = [];
     const routes: any[] = [];
 
-    // stops
-    for (let i = 0; i < placemarks.length; i++) {
-      const placemark = placemarks[i];
-      const nameElement = placemark?.getElementsByTagName("name")[0];
-      const namePlacemark = nameElement
-        ? nameElement.textContent?.replace(/\s+/g, " ").trim()
-        : `Item ${i + 1}`;
-
-      const uuid = KMLProcessor.generateUUID();
-      const stopId = `${uuid}`;
-      gtfs.setStopId(stopId);
-
-      // Buscar Point (stops)
-      const point = placemark?.getElementsByTagName("Point")[0];
-      if (point) {
-        const coordinates = point.getElementsByTagName("coordinates")[0];
-
-        if (coordinates) {
-          const [lon, lat] = coordinates.textContent
-            .trim()
-            .split(",")
-            .map(Number);
-
-          stops.push({
-            stop_id: stopId,
-            stop_name: namePlacemark,
-            stop_desc: this.getDescription(placemark),
-            stop_lat: lat ?? 0,
-            stop_lon: lon ?? 0,
-            location_type: 0,
-            parent_station: "",
-            stop_timezone: "America/Guatemala",
-            wheelchair_boarding: 1,
-            zone_id: "",
-          });
-        }
-      }
-    }
-
     const agencyId = gtfs.getAgencyId();
-    // routes
+
+    // Procesar cada folder por separado
     for (let i = 0; i < folders.length; i++) {
       const folder = folders[i];
       const folderNameElement = folder?.getElementsByTagName("name")[0];
-
-      const uuid = KMLProcessor.generateUUID();
-
-      const RouteName = folderNameElement
+      const routeName = folderNameElement
         ? folderNameElement.textContent
         : `Ruta ${i + 1}`;
 
-      // Buscar geometrías dentro del folder
+      const uuid = KMLProcessor.generateUUID();
+      const routeId = `${uuid}`;
+
+      // Obtener paradas de este folder específico
       const folderPlacemarks = folder!.getElementsByTagName("Placemark");
+      const routeStops: Stops[] = [];
       let coordinates: Array<{ lat: number; lon: number }> = [];
 
       for (let j = 0; j < folderPlacemarks.length; j++) {
         const placemark = folderPlacemarks[j];
+        const nameElement = placemark?.getElementsByTagName("name")[0];
+        const namePlacemark = nameElement
+          ? nameElement.textContent?.replace(/\s+/g, " ").trim()
+          : `Stop ${j + 1}`;
 
-        // LineString
+        // Buscar Point (paradas de esta ruta)
+        const point = placemark?.getElementsByTagName("Point")[0];
+        if (point) {
+          const coordsElement = point.getElementsByTagName("coordinates")[0];
+          if (coordsElement) {
+            const [lon, lat] = coordsElement.textContent
+              .trim()
+              .split(",")
+              .map(Number);
+
+            const stopUuid = KMLProcessor.generateUUID();
+            const stopId = `${stopUuid}`;
+
+            const stop: Stops = {
+              stop_id: stopId,
+              stop_name: namePlacemark,
+              stop_desc: this.getDescription(placemark),
+              stop_lat: lat ?? 0,
+              stop_lon: lon ?? 0,
+              location_type: 0,
+              parent_station: "",
+              stop_timezone: "America/Guatemala",
+              wheelchair_boarding: 1,
+              zone_id: "",
+            };
+
+            routeStops.push(stop);
+            stops.push(stop);
+          }
+        }
+
+        // Buscar geometrías (LineString/Polygon)
         const lineString = placemark?.getElementsByTagName("LineString")[0];
         if (lineString) {
           const coordsElement =
@@ -133,12 +129,47 @@ class KMLProcessor {
                 const [lon = 0, lat = 0] = coord.split(",").map(Number);
                 return { lat, lon };
               });
-              break;
             }
           }
         }
 
-        // Polygon
+        // Buscar MultiGeometry primero
+        const multiGeometry =
+          placemark?.getElementsByTagName("MultiGeometry")[0];
+        if (multiGeometry && coordinates.length === 0) {
+          const polygons = multiGeometry.getElementsByTagName("Polygon");
+          // Combinar coordenadas de todos los polígonos
+          for (let k = 0; k < polygons.length; k++) {
+            const polygon = polygons[k];
+            if (polygon) {
+              const outerBoundary =
+                polygon.getElementsByTagName("outerBoundaryIs")[0];
+              if (outerBoundary) {
+                const linearRing =
+                  outerBoundary.getElementsByTagName("LinearRing")[0];
+                if (linearRing) {
+                  const coordsElement =
+                    linearRing.getElementsByTagName("coordinates")[0];
+                  if (coordsElement) {
+                    const coordText = coordsElement.textContent?.trim();
+                    if (coordText) {
+                      const coordPairs = coordText
+                        .split(/\s+/)
+                        .filter((coord) => coord.includes(","));
+                      const polygonCoords = coordPairs.map((coord) => {
+                        const [lon = 0, lat = 0] = coord.split(",").map(Number);
+                        return { lat, lon };
+                      });
+                      coordinates.push(...polygonCoords);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        // Buscar Polygon si no hay LineString ni MultiGeometry
         const polygon = placemark?.getElementsByTagName("Polygon")[0];
         if (polygon && coordinates.length === 0) {
           const outerBoundary =
@@ -159,7 +190,6 @@ class KMLProcessor {
                     const [lon = 0, lat = 0] = coord.split(",").map(Number);
                     return { lat, lon };
                   });
-                  break;
                 }
               }
             }
@@ -167,14 +197,16 @@ class KMLProcessor {
         }
       }
 
+      // Crear la ruta con sus paradas específicas
       routes.push({
-        route_id: `${uuid}`,
-        agency_id: `${agencyId}`,
-        route_short_name: RouteName,
+        route_id: routeId,
+        agency_id: agencyId,
+        route_short_name: routeName,
         route_long_name: "",
         route_desc: "",
         route_type: 3,
         coordinates: coordinates,
+        stops: routeStops, // ← Paradas específicas de esta ruta
       });
     }
 
@@ -274,74 +306,85 @@ function createCalendar() {
 function createTripsAndStopTimes(stops: Stops[], routes: Routes[]) {
   const trips: Trips[] = [];
   const stopTimes: StopTimes[] = [];
+  const FREQUENCY_MINUTES = 10;
+  const START_TIME = "05:30";
+  const END_TIME = "20:00";
 
-  // Distribución equitativa de paradas
-  const totalStops = stops.length;
-  const totalRoutes = routes.length;
-  const stopsPerRoute = Math.floor(totalStops / totalRoutes);
-  console.log("🚀 ~ createTripsAndStopTimes ~ stopsPerRoute:", stopsPerRoute);
+  function timeToMinutes(time: string): number {
+    const [hours, minutes] = time.split(":").map(Number);
+    return hours! * 60 + minutes!;
+  }
 
-  routes.forEach((route, routeIndex) => {
-    const shapeId = route.route_id; // Mismo shape_id que en shapes.txt
+  function minutesToTime(minutes: number): string {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours.toString().padStart(2, "0")}:${mins
+      .toString()
+      .padStart(2, "0")}:00`;
+  }
 
-    // Asignar rango de paradas a cada ruta
-    const startIdx = routeIndex * stopsPerRoute;
-    let endIdx = startIdx + stopsPerRoute;
+  const startMinutes = timeToMinutes(START_TIME);
+  const endMinutes = timeToMinutes(END_TIME);
+  const service_id = gtfs.getCalendarId();
 
-    // Para la última ruta, incluir paradas restantes
-    if (routeIndex === totalRoutes - 1) {
-      endIdx = totalStops;
-    }
+  routes.forEach((route) => {
+    let tripCounter = 1;
 
-    const routeStops = stops.slice(startIdx, endIdx);
-
-    const serviceId = gtfs.getCalendarId();
-    // Crear múltiples trips por ruta
-    for (let tripNum = 1; tripNum <= 3; tripNum++) {
-      const tripId = `${route.route_id}-${tripNum}`;
-      const direction = tripNum <= 2 ? 0 : 1;
+    // Generar trips cada 10 minutos de 5:30 a 20:00
+    for (
+      let time = startMinutes;
+      time <= endMinutes;
+      time += FREQUENCY_MINUTES
+    ) {
+      const tripId = `${route.route_id}_${tripCounter
+        .toString()
+        .padStart(3, "0")}`;
 
       trips.push({
         route_id: route.route_id,
-        service_id: serviceId,
+        service_id,
         trip_id: tripId,
-        shape_id: shapeId,
-        trip_headsign: `${route.route_short_name
-          .toLowerCase()
-          .replace(/\b\w/g, (l) => l.toUpperCase())} Viaje ${tripNum}`,
-        direction_id: direction,
-        wheelchair_accessible: 0,
+        shape_id: route.route_id,
+        trip_headsign: route.route_short_name,
+        direction_id: 0,
+        wheelchair_accessible: 1,
       });
 
-      // Crear horarios
-      const startHour = 6 + (tripNum - 1) * 4; // 6:00, 10:00, 14:00
-      const stopsForTrip = routeStops.slice(0, 20); // Máximo 20 paradas por trip
+      // Usar solo las paradas específicas de esta ruta
+      const routeStops = route.stops || [];
 
-      // Invertir orden si es dirección contraria
-      const finalStops =
-        direction === 1 ? stopsForTrip.slice().reverse() : stopsForTrip;
+      if (routeStops.length === 0) {
+        console.warn(`⚠️ Ruta ${route.route_short_name} no tiene paradas`);
+        return;
+      }
 
-      finalStops.forEach((stop, seq) => {
-        const arrivalTime = startHour * 60 + seq * 3; // 3 minutos entre paradas
-        const arrivalHour = Math.floor(arrivalTime / 60);
-        const arrivalMin = arrivalTime % 60;
-
+      // Crear stop_times solo para las paradas de esta ruta
+      routeStops.forEach((stop, seq) => {
+        const stopId =
+          typeof stop === "string" ? stop : (stop as Stops).stop_id;
+        const stopTimeMinutes = time + seq * 5; // 5 min entre paradas
+        const arrivalTime = minutesToTime(stopTimeMinutes);
         stopTimes.push({
           trip_id: tripId,
-          arrival_time: `${arrivalHour.toString().padStart(2, "0")}:${arrivalMin
-            .toString()
-            .padStart(2, "0")}:00`,
-          departure_time: `${arrivalHour
-            .toString()
-            .padStart(2, "0")}:${arrivalMin.toString().padStart(2, "0")}:00`,
-          stop_id: stop.stop_id,
+          arrival_time: arrivalTime,
+          departure_time: arrivalTime,
+          // stop_id: stop.stop_id,
+          stop_id: stopId,
           stop_sequence: seq + 1,
           pickup_type: 0,
           drop_off_type: 0,
         });
       });
+      console.log("🚀 ~ createTripsAndStopTimes ~ routeStops:", routeStops);
+      tripCounter++;
     }
   });
+
+  console.log(`🚌 Trips generados: ${trips.length}`);
+  console.log(`⏰ Stop times generados: ${stopTimes.length}`);
+  console.log(
+    `📅 Horario: ${START_TIME} - ${END_TIME} cada ${FREQUENCY_MINUTES} min`
+  );
 
   // Escribir trips.txt
   const tripsHeader =
@@ -431,10 +474,6 @@ function main(kmlPath: string) {
     createShapes(routes);
     createTripsAndStopTimes(stops, routes);
     generatZip("./gtfs_feed", "gtfs.zip");
-
-    console.log(
-      "============= ✅ GTFS feed generado en la carpeta 'gtfs_feed' ============="
-    );
   } catch (error: Error | any) {
     console.error("❌ Error:", error.message);
   }

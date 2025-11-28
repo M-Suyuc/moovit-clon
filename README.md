@@ -1,4 +1,11 @@
-# Steps to run project **mls-transport**
+<div align="center">
+    <img src="./public/images/lines.png" /> 
+  <h3>
+    <strong>mls-Transport</strong>
+  </h3>
+</div>
+
+## Get started
 
 > [!IMPORTANT]
 > If you find this information useful, please leave a star in the repository.
@@ -46,7 +53,7 @@ create server using the credenciales that was used in the pgconfig of docker-com
 
 Credentials for createing a new server in pgAdmin
 
-- Hoast name/address: postgis_db | localhost | if you has a problem see this command [See command](#commando-find-ip-address)
+- Hoast name/address: gtfs_db (name of the docker container) | postgis_db | localhost | if you has a problem see this command [See command](#commando-find-ip-address)
 - port: 5432
 - Maintenance database: postgis_db
 - Username: postgis
@@ -79,7 +86,7 @@ CREATE EXTENSION address_standardizer;
 ## 6. Import data gtfs to db of posgis using [gtfs-to-sql package](https://www.npmjs.com/package/gtfs-via-postgres)
 
 ```sh
-npx gtfs-to-sql --require-dependencies ./src/server-js/gtfs_feed/*.txt | docker exec -i gtfs_db psql -U postgis -d postgis_db
+npx gtfs-to-sql --require-dependencies ./src/server/gtfs_feed/*.txt | docker exec -i gtfs_db psql -U postgis -d postgis_db
 ```
 
 ## Verify in pgadmin that the import was successful
@@ -151,3 +158,8 @@ pnpm run dev
 # 10. Generar tiles y crear .mbtiles
  make generate-tiles-pg
 ```
+
+<div align="center">
+    <img src="./public/images/lines.png" /> 
+    <img src="./public/images/line.png" /> 
+</div>
