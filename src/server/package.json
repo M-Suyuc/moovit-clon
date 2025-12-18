@@ -5,7 +5,8 @@
   "description": "Convertidor de KML a GTFS usando Node.js",
   "main": "main.js",
   "scripts": {
-    "dev": "tsx ./main.ts"
+    "dev": "tsx ./main.ts",
+    "cleanup": "tsx cleanup.ts"
   },
   "dependencies": {
     "@types/xmldom": "^0.1.34",

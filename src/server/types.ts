@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface Stops {
   stop_id: string;
   stop_name: string;
