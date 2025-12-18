@@ -20,6 +20,8 @@ node_modules
 /images
 *.kml
 
+/pgadmin
+
 # testing
 /coverage
 
