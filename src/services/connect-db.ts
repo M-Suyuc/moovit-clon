@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-namespace */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import "server-only";
 
 import { Pool, QueryResult, QueryResultRow } from "pg";
@@ -29,6 +32,7 @@ interface Database {
     params?: any[]
   ): Promise<QueryResult<T>>;
   getPool(): Pool;
+  getClient(): Promise<any>;
   end(): Promise<void>;
 }
 
@@ -101,6 +105,15 @@ const db: Database = {
     return pool.query<T>(text, params);
   },
 
+  // EN TU connect-db.ts, CAMBIA el método getClient a esto:
+  getClient: async (): Promise<any> => {
+    const pool = getPool();
+    const client = await pool.connect();
+
+    // NO sobrescribas el método query, pg-copy-streams ya lo hace
+    return client;
+  },
+
   getPool: (): Pool => {
     return getPool();
   },
@@ -114,3 +127,29 @@ const db: Database = {
 };
 
 export default db;
+// ver los campos que faltan o buscar algunan maera de evitar esos camposen el paquete de gtfs-via-postgres
+// para que solo llene los campos necesarios | sololos que lleve el archivo gtfs
+// error en la console:
+// 📥 Procesando agency...
+// Error en COPY para agency: missing data for column "agency_phone"
+// ❌ Error procesando agency: missing data for column "agency_phone"
+// ❌ Error en el proceso: [error: missing data for column "agency_phone"] {
+//   length: 235,
+//   severity: 'ERROR',
+//   code: '22P04',
+//   detail: undefined,
+//   hint: undefined,
+//   position: undefined,
+//   internalPosition: undefined,
+//   internalQuery: undefined,
+//   where: 'COPY temp_agency, line 2: "9966233a-0459-4134-b88b-082b732ab6f4,TuBus,https://www.muniguate.com/movilidadurbana/tubus,America/G..."',
+//   schema: undefined,
+//   table: undefined,
+//   column: undefined,
+//   dataType: undefined,
+//   constraint: undefined,
+//   file: 'copyfromparse.c',
+//   line: '902',
+//   routine: 'NextCopyFrom'
+// }
+//  POST /api/process-kml 500 in 2482ms
