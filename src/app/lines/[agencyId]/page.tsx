@@ -4,6 +4,7 @@ import { getRoutesByAgencyId } from "@/actions/get-routes-by-agency-id";
 import { getDataToCreateSection } from "@/actions/get-section-data";
 import Sidebar, { Route } from "@/components/Sidebar";
 import { generateSectorImageUrl } from "@/lib/generate_sector_image";
+import Image from "next/image";
 import { Suspense } from "react";
 
 type RoutesProps = Promise<{ agencyId: string }>;
@@ -20,7 +21,6 @@ const Page = async (props: { params: RoutesProps }) => {
 
   const [positions] = await getCenterPosition();
   const area = await getDataToCreateSection();
-  // console.log("🚀 ~ Page ~ area:", area)
   const coordinates = area.map(({ lon, lat }) => [lon, lat]).join("|");
   const { center_lat, center_lon } = positions;
 
@@ -58,11 +58,15 @@ const Page = async (props: { params: RoutesProps }) => {
 
           {/* img */}
           <div className="flex-1 overflow-hidden">
-            <img
-              src={imageUrl}
-              alt={`Mapa ${nameAgency}`}
-              className="w-[550px] h-[540px] rounded ml-auto border border-slate-200"
-            />
+            {imageUrl && (
+              <Image
+                width={550}
+                height={540}
+                src={response.url}
+                alt={`Mapa ${nameAgency}`}
+                className="w-[550px] h-[540px] rounded ml-auto border border-slate-200"
+              />
+            )}
           </div>
         </div>
       </div>
