@@ -1,7 +1,9 @@
+import { generateStaticMap } from "@/actions/generate-image";
 import { getShapeById } from "@/actions/get-shape-by-id";
 import { getStopsByRouteId } from "@/actions/getStopsByRouteId";
 import SidebarStops from "@/components/SidebarStops";
-import { generateRouteImageUrl } from "@/lib/generate_sector_image";
+import { encodePolyline } from "@/lib/polyline-encoder";
+import Image from "next/image";
 import { Suspense } from "react";
 
 type RoutesProps = Promise<{ routeId: string }>;
@@ -13,19 +15,23 @@ const SingleRoutePage = async (props: { params: RoutesProps }) => {
   const routeName = stops[0]?.route_short_name || "Ruta sin nombre";
 
   const infoShapes = await getShapeById({ routeId });
-  const coordinates = infoShapes
-    .map(({ longitude, latitude }) => [longitude, latitude])
-    .join("|");
-
-  const markes = stops
+  const markers = stops
     .map(
       ({ longitude, latitude }) =>
         `&marker=${longitude},${latitude}|marker.png|scale:0.3`
     )
     .join("");
-  const imageUrl = generateRouteImageUrl({ coordinates, markes });
-  const response = await fetch(imageUrl);
-  if (!response.ok) throw new Error("Error al cargar la imagen");
+
+  const coordinatesArray: [number, number][] = infoShapes.map(
+    ({ longitude, latitude }) => [longitude, latitude]
+  );
+
+  const encodedPath = encodePolyline(coordinatesArray);
+
+  const { success, image } = await generateStaticMap({
+    markers,
+    encodedPath,
+  });
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-neutral-50">
@@ -51,11 +57,15 @@ const SingleRoutePage = async (props: { params: RoutesProps }) => {
 
           {/* img */}
           <div className="flex-1 overflow-hidden">
-            <img
-              src={imageUrl}
-              alt={`Mapa ${routeName}`}
-              className="w-[550px] h-[540px] rounded ml-auto border border-slate-200"
-            />
+            {success && image && (
+              <Image
+                width={550}
+                height={540}
+                src={image}
+                alt={`Mapa ${routeName}`}
+                className="w-[550px] h-[540px] rounded ml-auto border border-slate-200"
+              />
+            )}
           </div>
         </div>
       </div>
