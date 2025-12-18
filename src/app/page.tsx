@@ -1,8 +1,9 @@
 import { getAgencies } from "@/actions/get-agencies";
+import { Agency } from "@/types";
 import Link from "next/link";
 
 export default async function Home() {
-  const agencies = await getAgencies();
+  const agencies: Agency[] | { error: string } = await getAgencies();
 
   return (
     <>
@@ -58,22 +59,57 @@ export default async function Home() {
       </section>
 
       {/* agencies section */}
-      <section className="bg-neutral-200/40">
+      <section className="bg-neutral-200/30 relative">
         <div className="container mx-auto space-y-8 py-8">
-          <h2 className="text-2xl font-bold ">Agencias de autobús</h2>
-          <ul className="flex gap-4">
-            <li>
-              {agencies.map((agency) => (
-                <Link
-                  key={agency.agency_id}
-                  href={`/lines/${agency.agency_id}`}
-                  className="bg-white py-2 px-4 block "
-                >
-                  <h3>{agency.agency_name}</h3>
-                </Link>
-              ))}
-            </li>
-          </ul>
+          {agencies && "error" in agencies && agencies.error ? (
+            <div className="flex flex-col gap-5 justify-center items-center">
+              {agencies.error === "GTFS_NOT_IMPORTED" ? (
+                <p className="text-red-500 text-xl">
+                  Los datos GTFS no han sido importados aún.
+                </p>
+              ) : (
+                <p className="text-red-500 text-xl">
+                  Error de conexión a la base de datos.
+                </p>
+              )}
+              <Link
+                href="/admin/upload"
+                className="bg-white text-blue-500 px-4 py-2 rounded-md z-10"
+              >
+                Subir KML
+              </Link>
+            </div>
+          ) : (
+            agencies && (
+              <>
+                <h2 className="text-2xl font-bold ">Agencias de autobús</h2>
+                <ul className="flex gap-4">
+                  {agencies &&
+                    (agencies as Agency[]).map((agency) => (
+                      <li
+                        key={agency.agency_id}
+                        className="bg-white border rounded-md border-neutral-200 hover:shadow-md transition-shadow"
+                      >
+                        <Link
+                          href={`/lines/${agency.agency_id}`}
+                          className="py-2 px-4 block"
+                        >
+                          <h3>{agency.agency_name}</h3>
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              </>
+            )
+          )}
+        </div>
+        <div>
+          <Link
+            href="/admin/upload"
+            className="absolute top-4 right-8 bg-white outline text-blue-500 px-4 py-2 rounded-md z-10"
+          >
+            Subir KML
+          </Link>
         </div>
       </section>
     </>
