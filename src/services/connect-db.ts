@@ -42,12 +42,25 @@ const poolConfig = {
   idleTimeoutMillis: 10000, // close idle clients after 10 seconds
   connectionTimeoutMillis: 10000, // return an error after 10 seconds if connection could not be established
   host:
-    process.env.POSTGISHOST === "localhost"
-      ? "127.0.0.1"
+    process.env.NODE_ENV === "production"
+      ? process.env.POSTGISHOST_PROD
       : process.env.POSTGISHOST,
-  database: process.env.POSTGISDBNAME,
-  user: process.env.POSTGISUSER,
-  password: process.env.POSTGISPASSWORD,
+
+  database:
+    process.env.NODE_ENV === "production"
+      ? process.env.POSTGISDBNAME_PROD
+      : process.env.POSTGISDBNAME,
+
+  user:
+    process.env.NODE_ENV === "production"
+      ? process.env.POSTGISUSER_PROD
+      : process.env.POSTGISUSER,
+
+  password:
+    process.env.NODE_ENV === "production"
+      ? process.env.POSTGISPASSWORD_PROD
+      : process.env.POSTGISPASSWORD,
+
   port: process.env.POSTGISPORT ?? 5432,
 };
 
