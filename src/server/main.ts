@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "node:fs";
 import { v4 as uuidv4 } from "uuid";
 import { DOMParser } from "xmldom";
@@ -68,8 +69,21 @@ class KMLProcessor {
         ? folderNameElement.textContent
         : `Ruta ${i + 1}`;
 
+      if (
+        (routeName &&
+          (routeName.toLowerCase().includes("cercanía") ||
+            routeName.toLowerCase().includes("conexión") ||
+            routeName.toLowerCase().includes("caminando"))) ||
+        routeName.toLowerCase().includes("no asignada") ||
+        routeName.toLowerCase().includes("varios")
+      ) {
+        console.log(`⚠️ Saltando folder: ${routeName} (no es una ruta)`);
+        continue;
+      }
+
       const uuid = KMLProcessor.generateUUID();
       const routeId = `${uuid}`;
+      console.log("🚀 ~ KMLProcessor ~ getStopsAndRoutes ~ routeId:", routeId);
 
       // Obtener paradas de este folder específico
       const folderPlacemarks = folder!.getElementsByTagName("Placemark");
@@ -223,19 +237,34 @@ function createDirectory() {
   }
 }
 
-function createAgency({ AgencyName }: { AgencyName?: string | undefined }) {
-  const uuid = KMLProcessor.generateUUID();
+// function createAgency({ AgencyName }: { AgencyName?: string | undefined }) {
+//   const uuid = KMLProcessor.generateUUID();
 
-  const agencyId = `${uuid}`;
-  gtfs.setAgencyId(agencyId);
+//   const agencyId = `${uuid}`;
+//   gtfs.setAgencyId(agencyId);
 
-  const agency = [
-    "agency_id,agency_name,agency_url,agency_timezone,agency_lang",
-    `${agencyId},${AgencyName},https://www.transmetro.gob.gt,America/Guatemala,es`,
-  ].join("\n");
+//   const agency = [
+//     "agency_id,agency_name,agency_url,agency_timezone,agency_lang",
+//     `${agencyId},${AgencyName},https://www.transmetro.gob.gt,America/Guatemala,es`,
+//   ].join("\n");
 
-  fs.writeFileSync("gtfs_feed/agency.txt", agency);
-  return { agency, agencyId };
+//   fs.writeFileSync("gtfs_feed/agency.txt", agency);
+//   return { agency, agencyId };
+// }
+function createAgency(
+  agencies: Array<{ AgencyName?: string | undefined; agencyId: string }>
+) {
+  const header = "agency_id,agency_name,agency_url,agency_timezone,agency_lang";
+  const rows = agencies.map(
+    ({ agencyId, AgencyName }) =>
+      `${agencyId},${AgencyName},https://www.muniguate.com/movilidadurbana/${AgencyName?.toLowerCase()},America/Guatemala,es`
+  );
+
+  // https://www.muniguate.com/movilidadurbana/transmetro/
+
+  const agencyContent = [header, ...rows].join("\n");
+  fs.writeFileSync("gtfs_feed/agency.txt", agencyContent);
+  return agencyContent;
 }
 
 function createStops(stops: Stops[]) {
@@ -243,7 +272,7 @@ function createStops(stops: Stops[]) {
     "stop_id,stop_name,stop_desc,stop_lat,stop_lon,location_type,parent_station,stop_timezone,wheelchair_boarding";
   const rows = stops.map(
     (stop) =>
-      `${stop.stop_id},${stop.stop_name},"${stop.stop_desc.replace(
+      `${stop.stop_id},"${stop.stop_name}","${stop.stop_desc.replace(
         /"/g,
         "'"
       )}",${stop.stop_lat},${stop.stop_lon},0,,America/Guatemala,1`
@@ -264,7 +293,7 @@ function createRoutes(routes: Routes[], routeNames: string[]) {
   const header =
     "route_id,agency_id,route_short_name,route_long_name,route_desc,route_type";
   const rows = routes.map(
-    (route, index) =>
+    (route) =>
       `${route.route_id},${route.agency_id},${route.route_short_name},,${route.route_desc},${route.route_type}`
   );
 
@@ -328,6 +357,7 @@ function createTripsAndStopTimes(stops: Stops[], routes: Routes[]) {
   const service_id = gtfs.getCalendarId();
 
   routes.forEach((route) => {
+    console.log("🚀 ~ createTripsAndStopTimes ~ route:", route.route_id);
     let tripCounter = 1;
 
     // Generar trips cada 10 minutos de 5:30 a 20:00
@@ -341,12 +371,12 @@ function createTripsAndStopTimes(stops: Stops[], routes: Routes[]) {
         .padStart(3, "0")}`;
 
       trips.push({
+        trip_id: tripId,
         route_id: route.route_id,
         service_id,
-        trip_id: tripId,
-        shape_id: route.route_id,
         trip_headsign: route.route_short_name,
         direction_id: 0,
+        shape_id: route.route_id,
         wheelchair_accessible: 1,
       });
 
@@ -368,14 +398,12 @@ function createTripsAndStopTimes(stops: Stops[], routes: Routes[]) {
           trip_id: tripId,
           arrival_time: arrivalTime,
           departure_time: arrivalTime,
-          // stop_id: stop.stop_id,
           stop_id: stopId,
           stop_sequence: seq + 1,
           pickup_type: 0,
           drop_off_type: 0,
         });
       });
-      console.log("🚀 ~ createTripsAndStopTimes ~ routeStops:", routeStops);
       tripCounter++;
     }
   });
@@ -413,20 +441,26 @@ function createTripsAndStopTimes(stops: Stops[], routes: Routes[]) {
   return { trips, stopTimes };
 }
 
-function createFeedInfo({ AgencyName }: { AgencyName?: string | undefined }) {
+function createFeedInfo(allAgencies?: string[]) {
   const today = new Date().toISOString().slice(0, 10).replace(/-/g, "");
   const nextYear = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
     .toISOString()
     .slice(0, 10)
     .replace(/-/g, "");
 
-  const feedInfo = [
-    "feed_publisher_name,feed_publisher_url,feed_lang,feed_contact_email,feed_start_date,feed_end_date,feed_version",
-    `${AgencyName},https://mls-transport.com,es,suyucmarlon02@gmail.com,${today},${nextYear},1.0.${today}`,
-  ].join("\n");
+  const header =
+    "feed_publisher_name,feed_publisher_url,feed_lang,feed_contact_email,feed_start_date,feed_end_date,feed_version";
 
-  fs.writeFileSync("gtfs_feed/feed_info.txt", feedInfo);
-  return feedInfo;
+  const rows =
+    allAgencies?.map(
+      (agencyName) =>
+        `${agencyName},https://mls-transport.com,es,suyucmarlon02@gmail.com,${today},${nextYear},1.0.${today}`
+    ) ?? [];
+
+  const feedContent = [header, ...rows].join("\n");
+
+  fs.writeFileSync("gtfs_feed/feed_info.txt", feedContent);
+  return feedContent;
 }
 
 async function generatZip(folderPath: string, outputPath: any) {
@@ -456,23 +490,53 @@ async function generatZip(folderPath: string, outputPath: any) {
   console.log(`ZIP creado: ${outputPath}`);
 }
 
-function main(kmlPath: string) {
+async function main(kmlPaths: string[]) {
   try {
-    const kmlProcessor = new KMLProcessor(kmlPath);
-    const { AgencyName } = kmlProcessor.getAgencyName();
-
     createDirectory();
-    createFeedInfo({ AgencyName });
-    createAgency({ AgencyName });
 
-    const { stops, routes } = kmlProcessor.getStopsAndRoutes();
-    const routeNames = kmlProcessor.getRouteNames();
+    const allAgencies: Array<{
+      AgencyName?: string | undefined;
+      agencyId: string;
+    }> = [];
+    const allStops: Stops[] = [];
+    const allRoutes: Routes[] = [];
 
-    createRoutes(routes, routeNames);
-    createStops(stops);
+    // Procesar cada archivo KML
+    kmlPaths.forEach((kmlPath) => {
+      console.log(`📁 Procesando: ${kmlPath}`);
+
+      const kmlProcessor = new KMLProcessor(kmlPath);
+      const { AgencyName } = kmlProcessor.getAgencyName();
+
+      // Generar ID único para esta agencia
+      const agencyId = KMLProcessor.generateUUID();
+      gtfs.setAgencyId(agencyId);
+
+      allAgencies.push({ AgencyName, agencyId });
+
+      const { stops, routes } = kmlProcessor.getStopsAndRoutes();
+
+      // Agregar agency_id a todas las rutas de esta agencia
+      routes.forEach((route) => {
+        route.agency_id = agencyId;
+      });
+
+      allStops.push(...stops);
+      allRoutes.push(...routes);
+    });
+
+    // Crear archivos GTFS con todos los datos
+    createFeedInfo(allRoutes.map((r) => r.route_short_name));
+    createAgency(allAgencies);
+    createRoutes(
+      allRoutes,
+      allRoutes.map((r) => r.route_short_name)
+    );
+    createStops(allStops);
     createCalendar();
-    createShapes(routes);
-    createTripsAndStopTimes(stops, routes);
+    createShapes(allRoutes);
+    createTripsAndStopTimes(allStops, allRoutes);
+
     generatZip("./gtfs_feed", "gtfs.zip");
   } catch (error: Error | any) {
     console.error("❌ Error:", error.message);
@@ -480,5 +544,13 @@ function main(kmlPath: string) {
 }
 
 (() => {
-  main("./Transmetro.kml");
+  // main(["./kmls/Transmetro-routes.kml", "./kmls/TuBus.kml"]);
+
+  // Usar archivo KML desde variable de entorno o archivos por defecto
+  const kmlInput = process.env.KML_INPUT;
+  const kmlFiles = kmlInput
+    ? [kmlInput]
+    : ["./kmls/Transmetro-routes.kml", "./kmls/TuBus.kml"];
+
+  main(kmlFiles).catch(console.error);
 })();

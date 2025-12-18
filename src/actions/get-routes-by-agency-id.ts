@@ -9,12 +9,10 @@ export async function getRoutesByAgencyId({ agencyId }: { agencyId: string }) {
       SELECT 
         route_id,
         route_short_name,
-        route_long_name,
         route_type
       FROM routes
       where agency_id = $1
-      ORDER BY route_short_name
-    `,
+      `,
       [`${agencyId}`]
     );
 

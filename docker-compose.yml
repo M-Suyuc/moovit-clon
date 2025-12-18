@@ -23,6 +23,11 @@ services:
       - 80:80
     depends_on:
       - postgis_db
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+      - ./pgadmin:/certs/server.cert
+      - ./pgadmin:/certs/server.key
+      - ./pgadmin:/pgadmin4/servers.json
 
   tileserver:
     image: maptiler/tileserver-gl

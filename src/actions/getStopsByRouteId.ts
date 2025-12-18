@@ -28,3 +28,24 @@ export async function getStopsByRouteId(routeId: string) {
     return [];
   }
 }
+
+//  const stops = await db.query(
+//       `
+//      SELECT
+//       r.route_short_name,
+//       r.agency_id,
+//       a.agency_name,
+//       s.stop_id,
+//       s.stop_name,
+//       ST_Y(s.stop_loc::geometry) as latitude,
+//       ST_X(s.stop_loc::geometry) as longitude
+//     FROM routes r
+//     JOIN agency a ON r.agency_id = a.agency_id
+//     JOIN trips t ON r.route_id = t.route_id
+//     JOIN stop_times st ON t.trip_id = st.trip_id
+//     JOIN stops s ON st.stop_id = s.stop_id
+//     WHERE r.route_id = $1
+//     GROUP BY r.route_short_name, r.agency_id, a.agency_name, s.stop_id, s.stop_name;
+//     `,
+//       [routeId]
+//     );

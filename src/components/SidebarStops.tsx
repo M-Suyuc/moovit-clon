@@ -24,7 +24,7 @@ const SidebarStops = async ({ data }: SidebarProps) => {
     >
       <div className="relative flex flex-col h-full max-h-full ">
         {/* Header */}
-        <header className=" p-4 flex justify-between items-center gap-x-2 bg-slate-900 text-white">
+        <header className="sticky top-0 left-0 p-4 flex justify-between items-center gap-x-2 bg-slate-900 text-white">
           <h3 className="font-medium">{data.length} - paradas</h3>
 
           <div className="lg:hidden -me-2">
