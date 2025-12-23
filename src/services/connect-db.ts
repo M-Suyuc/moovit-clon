@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-namespace */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import "server-only";
 
 import { Pool, QueryResult, QueryResultRow } from "pg";
@@ -92,9 +89,9 @@ const getPool = (): Pool => {
     // For development environments: handle hot reloading
     if (process.env.NODE_ENV !== "production") {
       // Clean up pool on module reload
-      // @ts-ignore
+      // @ts-expect-error
       if (module.hot) {
-        // @ts-ignore
+        // @ts-expect-error
         module.hot.dispose(() => {
           if (global.pgPool) {
             global.pgPool.end();
