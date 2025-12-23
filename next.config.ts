@@ -10,8 +10,16 @@ const nextConfig: NextConfig = {
         port: "8080",
         pathname: "/styles/**",
       },
+      {
+        protocol: "https",
+        hostname: "tileserver-guatemala.fly.dev",
+        pathname: "/styles/**",
+      },
     ],
   },
+  // experimental: {
+  //   serverComponentsExternalPackages: ["pg", "pg-copy-streams"],
+  // },
 };
 
 export default nextConfig;
