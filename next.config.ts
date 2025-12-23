@@ -17,9 +17,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // experimental: {
-  //   serverComponentsExternalPackages: ["pg", "pg-copy-streams"],
-  // },
 };
 
 export default nextConfig;
