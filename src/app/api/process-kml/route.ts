@@ -43,22 +43,37 @@ export async function POST(request: NextRequest) {
     // Verificar si las tablas ya existen
     let tablesExist = false;
     try {
-      await execAsync(
-        `docker exec gtfs_db psql -U postgis -d postgis_db -c "SELECT 1 FROM agency LIMIT 1;"`,
-        { timeout: 10000 }
-      );
+      if (process.env.NODE_ENV === "production") {
+        // En producción: verificar directamente en la DB
+        await db.query("SELECT 1 FROM agency LIMIT 1");
+      } else {
+        // En desarrollo: usar Docker
+        await execAsync(
+          `docker exec gtfs_db psql -U postgis -d postgis_db -c "SELECT 1 FROM agency LIMIT 1;"`,
+          { timeout: 10000 }
+        );
+      }
       tablesExist = true;
     } catch (e) {
-      console.error("Error limpiando archivo temporal:", e);
+      console.log("Tablas no existen");
       tablesExist = false;
     }
 
     if (!tablesExist) {
-      // Primera vez: crear tablas e importar datos
-      await execAsync(
-        `npx gtfs-to-sql --require-dependencies ./src/server/gtfs_feed/*.txt | docker exec -i gtfs_db psql -U postgis -d postgis_db`,
-        { timeout: 120000 }
-      );
+      if (process.env.NODE_ENV === "production") {
+        return NextResponse.json(
+          {
+            error: "Base de datos no inicializada. Contacta al administrador.",
+          },
+          { status: 500 }
+        );
+      } else {
+        // En desarrollo: crear tablas con Docker
+        await execAsync(
+          `npx gtfs-to-sql --require-dependencies ./src/server/gtfs_feed/*.txt | docker exec -i gtfs_db psql -U postgis -d postgis_db`,
+          { timeout: 120000 }
+        );
+      }
     } else {
       // TABLAS EXISTEN: Insertar datos usando COPY eficientemente
       const gtfsFeedPath = "./src/server/gtfs_feed";
