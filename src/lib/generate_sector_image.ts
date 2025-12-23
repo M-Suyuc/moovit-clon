@@ -10,13 +10,20 @@ interface RouteImageOptions extends ImageOptions {
   encodedPath?: string;
 }
 
+const tileServerUrl =
+  process.env.NODE_ENV === "production"
+    ? process.env.TILE_SERVER_URL
+    : "http://localhost:8080";
+
+const baseUrl = `${tileServerUrl}/styles/maptiler-basic/static/auto/550x540.webp`;
+
 export function generateSectorImageUrl({ coordinates }: ImageOptions) {
   // osm-bright
   // const baseUrl = `http://localhost:8080/styles/maptiler-basic/static/${centerLon},${centerLat},${zoom}/550x540.webp?path=fill:rgba(103,58,183,0.20)|stroke:rgba(103,58,183,0.8)|width:1|`;
 
-  const baseUrl = `http://localhost:8080/styles/maptiler-basic/static/auto/550x540.webp?path=fill:rgba(103,58,183,0.20)|stroke:rgba(103,58,183)|width:1|`;
+  const url = `${baseUrl}?path=fill:rgba(103,58,183,0.20)|stroke:rgba(103,58,183)|width:1|`;
 
-  return `${baseUrl}${coordinates}`;
+  return `${url}${coordinates}`;
 }
 
 export function generateRouteImageUrl({
@@ -26,7 +33,7 @@ export function generateRouteImageUrl({
   // const baseUrl = `http://localhost:8080/styles/maptiler-basic/static/auto/550x540.webp?path=stroke:rgba(233,30,99)|width:2|`;
   // return `${baseUrl}${coordinates}${markes}&border=rgba(0,0,0,.8)&borderwidth=1.5`;
 
-  const baseUrl = `http://localhost:8080/styles/maptiler-basic/static/auto/550x540.webp`;
+  // const baseUrl = `http://localhost:8080/styles/maptiler-basic/static/auto/550x540.webp`;
 
   if (encodedPath) {
     return `${baseUrl}?path=stroke:rgba(233,30,99)|width:2|enc:${encodedPath}${
@@ -36,7 +43,3 @@ export function generateRouteImageUrl({
 
   return;
 }
-
-// rgba(255,193,7)
-// rgba(0,1226,255)
-// rgba(233,30,99)
